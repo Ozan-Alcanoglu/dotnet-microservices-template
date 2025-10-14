@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-script
+  namespace: csmvck8s-ns
+data:
+  01-init-databases.sh: |
+    #!/bin/bash
+    set -e
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
+        CREATE DATABASE userdb;
+        CREATE DATABASE productdb;
+        GRANT ALL PRIVILEGES ON DATABASE userdb TO $POSTGRES_USER;
+        GRANT ALL PRIVILEGES ON DATABASE productdb TO $POSTGRES_USER;
+    EOSQL

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- RABBITMQ -->
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+    
+    <!-- MASS TRANSIT -->
+    <PackageReference Include="MassTransit" Version="8.2.3" />
+    
+    <!-- LOGGING -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+</Project>

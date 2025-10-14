@@ -1,0 +1,134 @@
+# OpenTelemetry Collector
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otel-collector
+  namespace: csmvck8s-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otel-collector
+  template:
+    metadata:
+      labels:
+        app: otel-collector
+    spec:
+      containers:
+      - name: otel-collector
+        image: otel/opentelemetry-collector:0.88.0
+        ports:
+        - containerPort: 4317
+        - containerPort: 4318
+        - containerPort: 8889
+        volumeMounts:
+        - name: otel-config
+          mountPath: /etc/otel
+      volumes:
+      - name: otel-config
+        configMap:
+          name: otel-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-collector
+  namespace: csmvck8s-ns
+spec:
+  selector:
+    app: otel-collector
+  ports:
+  - name: otlp-grpc
+    port: 4317
+    targetPort: 4317
+  - name: otlp-http
+    port: 4318
+    targetPort: 4318
+  - name: metrics
+    port: 8889
+    targetPort: 8889
+
+---
+# Seq - Log Management
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seq-deployment
+  namespace: csmvck8s-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seq
+  template:
+    metadata:
+      labels:
+        app: seq
+    spec:
+      containers:
+      - name: seq
+        image: datalust/seq:latest
+        ports:
+        - containerPort: 5341
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SEQ_FIRSTRUN_ADMINPASSWORD
+          value: "Password123!"
+        command: ["/seqsvr/Seq"]
+        args: 
+        - "run"
+        - "--storage=/data"
+        - "--listen=http://0.0.0.0:80"
+        - "--listen=http://0.0.0.0:5341"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seq-service
+  namespace: csmvck8s-ns
+spec:
+  selector:
+    app: seq
+  ports:
+  - port: 5341
+    targetPort: 5341
+
+---
+# Grafana (Opsiyonel - İstersen kaldırabilirsin)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+  namespace: csmvck8s-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: "admin"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+  namespace: csmvck8s-ns
+spec:
+  selector:
+    app: grafana
+  ports:
+  - port: 3000
+    targetPort: 3000

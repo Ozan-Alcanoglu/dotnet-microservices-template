@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-deployment
+  namespace: csmvck8s-ns
+spec:
+  selector:
+    matchLabels:
+      app: minio
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+      - name: minio
+        image: minio/minio:latest
+        command:
+        - /bin/bash
+        - -c
+        args:
+        - minio server /data --console-address ":9001"
+        env:
+        - name: MINIO_ROOT_USER
+          value: "admin"
+        - name: MINIO_ROOT_PASSWORD
+          value: "password123"
+        # CRITICAL: Yönlendirme döngüsünü önlemek için
+        - name: MINIO_SERVER_URL
+          value: "http://minio-service.csmvck8s-ns:9000"
+        - name: MINIO_BROWSER_REDIRECT_URL
+          value: "http://minio.microservices.local"
+        ports:
+        - containerPort: 9000  # API port
+          name: api
+        - containerPort: 9001  # Console port
+          name: console
+        volumeMounts:
+        - name: minio-storage
+          mountPath: /data
+      volumes:
+      - name: minio-storage
+        persistentVolumeClaim:
+          claimName: minio-pvc

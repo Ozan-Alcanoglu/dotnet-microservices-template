@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: csmvck8s-ns
+data:
+  # Observability
+  RABBITMQ_HOST: "rabbitmq-service.csmvck8s-ns.svc.cluster.local"
+  OTLP_ENDPOINT: "http://otel-collector.csmvck8s-ns.svc.cluster.local:4317"
+  SEQ_URL: "http://seq-service.csmvck8s-ns.svc.cluster.local:5341"
+  
+  # JWT Settings
+  JWT_ISSUER: "CSMVCK8S.AuthService"
+  JWT_AUDIENCE: "CSMVCK8S.Microservices"
+  
+  # Database Configuration
+  DB_HOST: "postgres-db-service"
+  DB_PORT: "5432"
+  DB_USER: "postgres"

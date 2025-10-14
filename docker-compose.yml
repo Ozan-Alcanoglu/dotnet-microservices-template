@@ -1,0 +1,83 @@
+version: '3.4'
+
+services:
+  # POSTGRESQL VERİTABANI
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - microservice-network
+
+  # AUTH SERVİSİ
+  auth-service-api:
+    build: 
+      context: . 
+      dockerfile: Services/auth-service/Dockerfile
+    container_name: auth-service-api
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - microservice-network
+
+  # USER SERVİSİ
+  user-service-api:
+    build: 
+      context: . 
+      dockerfile: Services/user-service/Dockerfile
+    container_name: user-service-api
+    ports:
+      - "8082:8080"  # BU SATIR EKLENDİ
+    depends_on:
+      - postgres
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - microservice-network
+
+  # PRODUCT SERVİSİ
+  product-service-api:
+    build: 
+      context: . 
+      dockerfile: Services/product-service/Dockerfile
+    container_name: product-service-api
+    ports:
+      - "8083:8080"  # BU SATIR EKLENDİ
+    depends_on:
+      - postgres
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - microservice-network
+
+  # API GATEWAY
+  gateway-service-api:
+    build:
+      context: . 
+      dockerfile: Services/gateway-service/Dockerfile
+    container_name: gateway-service-api
+    depends_on:
+      - auth-service-api
+      - user-service-api
+      - product-service-api
+    ports:
+      - "5000:8080" 
+    networks:
+      - microservice-network
+      
+volumes:
+  pgdata:
+
+networks:
+  microservice-network:
+    driver: bridge
