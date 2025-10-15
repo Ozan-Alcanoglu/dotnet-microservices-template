@@ -153,3 +153,5 @@ C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\product-service\bin\Debu
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\product-service\bin\Debug\net9.0\Minio.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\product-service\bin\Debug\net9.0\System.IO.Hashing.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\product-service\bin\Debug\net9.0\System.Reactive.dll
+C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\product-service\obj\Debug\net9.0\product-service.sourcelink.json
+C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\product-service\bin\Debug\net9.0\OpenTelemetry.Exporter.Prometheus.AspNetCore.dll

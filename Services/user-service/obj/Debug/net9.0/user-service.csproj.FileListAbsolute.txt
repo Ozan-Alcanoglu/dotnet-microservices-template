@@ -152,3 +152,5 @@ C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\user-service\bin\Debug\n
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\user-service\bin\Debug\net9.0\MassTransit.RabbitMqTransport.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\user-service\bin\Debug\net9.0\OpenTelemetry.Instrumentation.Runtime.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\user-service\bin\Debug\net9.0\RabbitMQ.Client.dll
+C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\user-service\obj\Debug\net9.0\user-service.sourcelink.json
+C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\user-service\bin\Debug\net9.0\OpenTelemetry.Exporter.Prometheus.AspNetCore.dll

@@ -9,12 +9,17 @@ namespace ProductService.Consumers;
 public class PhotoUploadConsumer : IConsumer<PhotoReadyForUploadEvent>
 {
     private readonly ILogger<PhotoUploadConsumer> _logger;
-    private readonly IMinioClient _minioClient; // ⬅️ IMinioClient olarak değiştir
+    private readonly IMinioClient _minioClient;
+    private readonly IPublishEndpoint _publishEndpoint; // ⬅️ BUNU EKLE
 
-    public PhotoUploadConsumer(ILogger<PhotoUploadConsumer> logger, IMinioClient minioClient) // ⬅️ Constructor'da da değiştir
+    public PhotoUploadConsumer(
+        ILogger<PhotoUploadConsumer> logger, 
+        IMinioClient minioClient,
+        IPublishEndpoint publishEndpoint) // ⬅️ BUNU EKLE
     {
         _logger = logger;
-        _minioClient = minioClient; // ⬅️ DI'dan al
+        _minioClient = minioClient;
+        _publishEndpoint = publishEndpoint; // ⬅️ BUNU EKLE
     }
 
     public async Task Consume(ConsumeContext<PhotoReadyForUploadEvent> context)
@@ -43,29 +48,35 @@ public class PhotoUploadConsumer : IConsumer<PhotoReadyForUploadEvent>
                 .WithObjectSize(stream.Length)
                 .WithContentType(photo.ContentType));
 
+            _logger.LogInformation("✅ Fotoğraf MinIO'ya yüklendi: {PhotoId} - {ObjectId}", 
+                photo.PhotoId, photo.MinioObjectId);
+
             // 3. ✅ STATUS GÜNCELLE: Başarılı event gönder
-            await context.Publish(new PhotoUploadCompletedEvent
+            _logger.LogInformation("📨 PhotoUploadCompletedEvent gönderiliyor: {PhotoId}", photo.PhotoId);
+            
+            await _publishEndpoint.Publish(new PhotoUploadCompletedEvent // ⬅️ _publishEndpoint kullan
             {
                 PhotoId = photo.PhotoId,
                 Status = "completed",
                 MinioUrl = $"http://minio-service:9000/photos/{photo.MinioObjectId}"
             });
 
-            _logger.LogInformation("✅ Fotoğraf MinIO'ya yüklendi: {PhotoId} - {ObjectId}", 
-                photo.PhotoId, photo.MinioObjectId);
+            _logger.LogInformation("✅ PhotoUploadCompletedEvent gönderildi: {PhotoId}", photo.PhotoId);
 
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "❌ MinIO'ya fotoğraf yükleme hatası: {PhotoId}", photo.PhotoId);
+            
             // 4. ✅ HATA DURUMU: Failed event gönder
-            await context.Publish(new PhotoUploadCompletedEvent
+            await _publishEndpoint.Publish(new PhotoUploadCompletedEvent // ⬅️ _publishEndpoint kullan
             {
                 PhotoId = photo.PhotoId,
                 Status = "failed",
                 ErrorMessage = ex.Message
             });
 
-            _logger.LogError(ex, "❌ MinIO'ya fotoğraf yükleme hatası: {PhotoId}", photo.PhotoId);
+            _logger.LogInformation("📨 Failed event gönderildi: {PhotoId}", photo.PhotoId);
         }
     }
 }

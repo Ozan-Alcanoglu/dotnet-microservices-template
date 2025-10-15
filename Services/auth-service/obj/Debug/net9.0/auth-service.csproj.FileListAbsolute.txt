@@ -148,12 +148,10 @@ C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\n
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\HealthChecks.UI.Client.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\HealthChecks.UI.Core.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\HealthChecks.UI.Data.dll
-C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\HealthChecks.UI.InMemory.Storage.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\Fractions.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\IdentityModel.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\IdentityModel.OidcClient.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\KubernetesClient.dll
-C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\OpenTelemetry.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\OpenTelemetry.Api.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\OpenTelemetry.Api.ProviderBuilderExtensions.dll
@@ -174,3 +172,8 @@ C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\n
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\Serilog.Sinks.PeriodicBatching.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\Serilog.Sinks.Seq.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\YamlDotNet.dll
+C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\obj\Debug\net9.0\auth-service.sourcelink.json
+C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\MassTransit.dll
+C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\MassTransit.Abstractions.dll
+C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\OpenTelemetry.Exporter.Prometheus.AspNetCore.dll
+C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\Services\auth-service\bin\Debug\net9.0\RabbitMQ.Client.dll

@@ -31,10 +31,12 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // ========== OPEN TELEMETRY OBSERVABILITY ==========
 builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService("UserService"))
     .WithMetrics(metrics => metrics
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
-        .AddRuntimeInstrumentation() // BU PAKETİ EKLEDİK
+        .AddRuntimeInstrumentation()
+        .AddPrometheusExporter() // ⬅️ BUNU EKLE
     )
     .WithTracing(tracing => tracing
         .AddAspNetCoreInstrumentation()
@@ -68,7 +70,7 @@ builder.Services.AddHttpClient<IProductClient, ProductClient>(client =>
 // MassTransit configuration
 builder.Services.AddMassTransit(x =>
 {
-    x.AddConsumer<PhotoStatusConsumer>(); // ⬅️ YENİ
+    x.AddConsumer<PhotoStatusConsumer>();
     
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -98,7 +100,7 @@ var app = builder.Build();
 app.UseRouting();
 
 // ========== PROMETHEUS METRICS ENDPOINT ==========
-//app.MapPrometheusScrapingEndpoint(); // ← /metrics endpoint'ini açar
+app.UseOpenTelemetryPrometheusScrapingEndpoint(); // ⬅️ BUNU EKLE
 
 // Health Checks
 app.MapHealthChecks("/health");

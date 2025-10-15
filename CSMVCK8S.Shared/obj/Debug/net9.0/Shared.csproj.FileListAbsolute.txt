@@ -10,3 +10,4 @@ C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\CSMVCK8S.Shared\obj\Debug\net9.0\
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\CSMVCK8S.Shared\obj\Debug\net9.0\Shared.pdb
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\CSMVCK8S.Shared\obj\Debug\net9.0\ref\Shared.dll
 C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\CSMVCK8S.Shared\obj\Debug\net9.0\Shared.csproj.AssemblyReference.cache
+C:\Users\oalca\kurslar\csharpprojeler\CSMVCK8S\CSMVCK8S.Shared\obj\Debug\net9.0\Shared.sourcelink.json

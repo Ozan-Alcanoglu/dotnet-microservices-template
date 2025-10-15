@@ -8,6 +8,7 @@ using CSMVCK8S.Shared.Events;
 using ProductService.Consumers;  // ⬅️ BUNU EKLE
 using Minio;                     // ⬅️ BUNU EKLE
 // OPEN TELEMETRY USING'LERİNİ EKLE:
+using OpenTelemetry; // ⬅️ BU DA GEREKLİ
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
@@ -28,12 +29,14 @@ builder.Services.AddScoped<IProductService, ProductService.Services.ProductServi
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // 4. OpenTelemetry - DÜZGÜN VERSİYON
+// 4. OpenTelemetry - DÜZGÜN VERSİYON
 builder.Services.AddOpenTelemetry()
     .ConfigureResource(resource => resource.AddService("ProductService"))
     .WithMetrics(metrics => metrics
         .AddAspNetCoreInstrumentation()
         .AddHttpClientInstrumentation()
         .AddRuntimeInstrumentation()
+        .AddPrometheusExporter() // ⬅️ BUNU EKLEYİN!
     )
     .WithTracing(tracing => tracing
         .AddAspNetCoreInstrumentation()
@@ -96,6 +99,8 @@ builder.Services.AddHealthChecks();
 // ========== SERVİS EKLEME BİTİŞ ==========
 
 var app = builder.Build();
+
+app.UseOpenTelemetryPrometheusScrapingEndpoint(); // ⬅️ BUNU EKLE
 
 app.UseRouting();
 

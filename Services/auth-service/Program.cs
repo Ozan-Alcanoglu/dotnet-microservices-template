@@ -3,6 +3,10 @@ using AuthService.Data;
 using AuthService.Services;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using AuthService.Mapper;
+using OpenTelemetry; // ⬅️ BUNU EKLEYİN
+using OpenTelemetry.Metrics; // ⬅️ VEYA BUNU
+using OpenTelemetry.Trace; 
+
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("PostgreSqlConn");
@@ -15,21 +19,22 @@ builder.Services.AddScoped<IAuthService, AuthService.Services.AuthService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddOpenTelemetry()
-    .ConfigureResource(resource => resource.AddService("auth-service"))
     .WithMetrics(metrics => 
     {
-        // METRICS instrumentation'ları burada
         metrics.AddAspNetCoreInstrumentation();
         metrics.AddHttpClientInstrumentation();
-        metrics.AddConsoleExporter();
+        metrics.AddPrometheusExporter();
     })
     .WithTracing(tracing => 
     {
-        // TRACING instrumentation'ları burada  
         tracing.AddAspNetCoreInstrumentation();
         tracing.AddHttpClientInstrumentation();
-        tracing.AddConsoleExporter();
     });
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();
 
 
 
@@ -43,7 +48,7 @@ var app = builder.Build();
 // ✅ BU SATIR EKLENDİ - EN ÖNEMLİ KISIM ✅
 app.UseRouting();
 
-
+app.UseOpenTelemetryPrometheusScrapingEndpoint(); // ⬅️ BUNU EKLE
 
 app.MapHealthChecks("/health");
 app.MapHealthChecks("/health/ready");

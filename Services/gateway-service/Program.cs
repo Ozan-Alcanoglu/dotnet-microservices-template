@@ -3,6 +3,9 @@ using Ocelot.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,9 +62,12 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
+app.UseOpenTelemetryPrometheusScrapingEndpoint(); // ⬅️ BUNU EKLE
+
+
 app.UseRouting();
 
-app.MapPrometheusScrapingEndpoint();
+
 
 app.MapHealthChecks("/health");
 app.MapHealthChecks("/health/ready");

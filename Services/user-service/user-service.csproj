@@ -15,7 +15,8 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.9.0" />
-    <!-- PROMETHEUS EXPORTER KALDIR -->
+<PackageReference Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.10.0-beta.1" />
+
 
     <!-- MASS TRANSIT - DOĞRU PAKET -->
     <PackageReference Include="MassTransit" Version="8.2.3" />
