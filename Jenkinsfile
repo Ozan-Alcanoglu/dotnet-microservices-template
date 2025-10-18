@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/dotnet/sdk:9.0'
+            args '--user root'  // 👈 Permission fix
+        }
+    }
     
     environment {
         DOTNET_CLI_TELEMETRY_OPTOUT = '1'
