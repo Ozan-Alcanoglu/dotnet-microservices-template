@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jenkins
+  namespace: jenkins
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"  # SSL için
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: jenkins.csmvck8s.local  # 👈 Domain'inizi yazın
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jenkins
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - jenkins.csmvck8s.local
+    secretName: jenkins-tls

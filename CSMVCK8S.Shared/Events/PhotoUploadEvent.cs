@@ -4,8 +4,8 @@ namespace CSMVCK8S.Shared.Events;
 
 public class PhotoUploadEvent
 {
-    public int PhotoId { get; set; }                    // Database Photo.Id
-    public string MinioObjectId { get; set; } = string.Empty; // MinIO'da kullanılacak unique ID
+    public int PhotoId { get; set; }                    
+    public string MinioObjectId { get; set; } = string.Empty; 
     public string FileName { get; set; } = string.Empty;
     public byte[] FileData { get; set; } = Array.Empty<byte>();
     public string UserId { get; set; } = string.Empty;
